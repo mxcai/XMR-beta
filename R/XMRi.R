@@ -1,24 +1,33 @@
-xmr_gibbs <- function(z1,z2,zt,n1, n2, nt, R1, R2, Rt, beta=0, sig_alpha, a_Sig, B_Sig, a_alpha, b_alpha, a_tau, b_tau,
+XMRi <- function(y1,X1,y2,X2,yt,Xt, beta=0, sig_alpha, a_Sig, B_Sig, a_alpha, b_alpha, a_tau, b_tau,
                       gibbsIter = 1000, burnin_prop = 0.2, null_prop = 0.1, fix.beta = FALSE){
+  ### Get the number of samples (n) and variables (p).
+  n1 <- nrow(X1)
+
+  n2 <- nrow(X2)
+
+  nt <- nrow(Xt)
+
+  p <- ncol(X1)
 
   burninIter <- ceiling(burnin_prop * gibbsIter)
 
   ### Get the number of samples (n) and variables (p).
 
-  p <- length(z1)
 
   s1 <- 1/sqrt(n1)
   s2 <- 1/sqrt(n2)
   st <- 1/sqrt(nt)
 
-  bh1 <- z1 * s1
-  bh2 <- z2 * s2
-  bht <- zt * st
+  bh1 <- t(X1) %*% y1/n1
+  bh2 <- t(X2) %*% y2/n2
+  bht <- t(Xt) %*% yt/nt
 
 
-  # LD mat of GWAS
-  if(missing(Rt))
-    Rt <- R1
+  # LD mat
+
+  R1 <- t(X1) %*%X1/n1
+  R2 <- t(X2) %*%X2/n2
+  Rt <- t(Xt) %*%Xt/nt
 
   R1.tilde <- R1-diag(p)
   R2.tilde <- R2-diag(p)
