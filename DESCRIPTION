@@ -1,0 +1,10 @@
+Package: XMRi
+Type: Package
+Title: XMR for cross-population cis-MR analysis
+Version: 0.1.0
+Author: Mingxuan Cai
+Maintainer: Mingxuan Cai <mingxcai@cityu.edu.hk>
+Description: This is a beta version of XMR, which use individual-level data as input.
+License: BSD_3_clause + file LICENSE
+Encoding: UTF-8
+LazyData: true
